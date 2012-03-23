@@ -16,7 +16,9 @@ function apprise(string, args, callback) {
 		    'textCancel': 'Cancel', // Cancel button default text
 		    'textYes': 'Yes', 	// Yes button default text
 		    'textNo': 'No', 	// No button default text
-		    'position': 'center'// position center (y-axis) any other option will default to 100 top
+		    'position': 'center',// position center (y-axis) any other option will default to 100 top
+		    'overlay': false,	// Show backing overlay div
+		    'appendTo': 'body'	// What element to be parent of new divs.
 		}
 
     if (args) {
@@ -34,11 +36,13 @@ function apprise(string, args, callback) {
         buttons = $('<div class="aButtons"></div>'),
 		posTop = 100;
 
-    overlay.css({ height: aHeight, width: aWidth })
-		.appendTo('body')
-        .fadeIn(100,function(){$(this).css('filter','alpha(opacity=70)');});
+    if (args['overlay']) {
+       overlay.css({ height: aHeight, width: aWidth })
+          .appendTo(args['appendTo'])
+          .fadeIn(100,function(){$(this).css('filter','alpha(opacity=70)');});
+    }
 
-    apprise.appendTo('body');
+    apprise.appendTo(args['appendTo']);
 
     inner.append(string)
 		.appendTo(apprise);
